@@ -1,0 +1,251 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Projects / Work | Akshat Gupta</title>
+
+    <!-- Gallery styling -->
+    <link rel="stylesheet" href="projects.css">
+</head>
+
+<body>
+
+    <!-- HEADER -->
+    <header class="top-bar">
+
+        <a href="index.html" class="profile">
+            <img src="new images/WhatsApp Image 2026-10-12 at 7.59.09 PM.jpeg"
+                 alt="Akshat Gupta"
+                 class="profile-photo">
+
+            <div class="profile-text">
+                <h2>AKSHAT GUPTA<span>_____</span></h2>
+                <p>Creative Designer &nbsp; / &nbsp; Portfolio  &nbsp; / &nbsp; Canva Designer</p>
+            </div>
+        </a>
+
+        <a href="index.html" class="back-button">
+            ← Back to Home
+        </a>
+
+    </header>
+
+
+    <!-- PAGE INTRODUCTION -->
+    <main class="container">
+
+        <section class="intro">
+            <p class="eyebrow">MY CREATIVE ARCHIVE / 01</p>
+
+            <h1>SELECTED <span>WORK.</span></h1>
+
+            <p class="intro-text">
+                A collection of my creative projects, graphic designs,
+                posters, presentations and digital experiments.
+            </p>
+        </section>
+
+
+        <!-- GALLERY TITLE AND SEARCH -->
+        <section class="gallery-section">
+
+            <div class="gallery-heading">
+                <div>
+                    <p class="eyebrow">THE COLLECTION</p>
+                    <h2>Projects / Work</h2>
+                </div>
+
+                <input
+                    type="search"
+                    id="search"
+                    placeholder="Search projects..."
+                    aria-label="Search projects">
+            </div>
+
+
+            <!-- PROJECT IMAGES APPEAR HERE -->
+            <div class="gallery" id="gallery"></div>
+
+            <p class="empty-message" id="empty-message">
+                No projects found. Try another search.
+            </p>
+
+        </section>
+
+
+        <!-- FOOTER -->
+        <footer class="footer">
+            <p>© 2026 Akshat Gupta · Made with creativity.</p>
+            <a href="index.html">Back to Portfolio ↗</a>
+        </footer>
+
+    </main>
+
+
+    <!-- IMAGE PREVIEW -->
+    <div class="image-viewer" id="image-viewer">
+        <button id="close-viewer" aria-label="Close preview">×</button>
+        <img src="" alt="Large project preview" id="large-image">
+    </div>
+
+
+    <script>
+        /*
+        ADD YOUR PROJECTS HERE.
+
+        To add another image, copy one item and change:
+        1. title
+        2. description
+        3. image
+        */
+
+        const projects = [
+            {
+                title: "Creative Poster",
+                description: "Poster design and typography",
+                image: "projects images/ai image.png"
+            },
+            {
+                title: "Social Media Design",
+                description: "Social media graphics",
+                image: "projects images/presentation 1.png"
+            },
+            {
+                title: "Presentation Design",
+                description: "PowerPoint presentation",
+                image: "projects images/presentation 2.png"
+            },
+            {
+                title: "AI Creative",
+                description: "AI-assisted visual design",
+                image: "projects images/logo 2.png "
+            },
+            {
+                title: "Event Poster",
+                description: "Creative event graphics",
+                image: "projects images/logo 1.png"
+            },
+            {
+                title: "Brand Design",
+                description: "Digital branding concepts",
+                image: "projects images/visiting card.png"
+            },
+            {
+                title: "Creative Project 07",
+                description: "Graphic design",
+                image: "projects images/yoga banner .png"
+            },
+            {
+                title: "Creative Project 08",
+                description: "Digital artwork",
+                image: "projects images/poster 1.png"
+            },
+            {
+                title: "Creative Project 09",
+                description: "Visual storytelling",
+                image: "projects images/resume.png"
+            },
+            {
+                title: "Creative Project 10",
+                description: "Creative experiments",
+                image: "projects images/inviatation.png"
+            },
+            {
+                title: "Creative Project 11",
+                description: "Poster and layout design",
+                image: "projects images/screenshot (20).png"
+            },
+            {
+                title: "Creative Project 12",
+                description: "Digital design",
+                image: "projects images/brocher.png"
+            }
+        ];
+
+
+        // DISPLAY ALL PROJECTS
+        const gallery = document.getElementById("gallery");
+        const search = document.getElementById("search");
+        const emptyMessage = document.getElementById("empty-message");
+
+        function showProjects() {
+
+            const searchText = search.value.toLowerCase().trim();
+
+            const filteredProjects = projects.filter(project =>
+                (project.title + " " + project.description)
+                    .toLowerCase()
+                    .includes(searchText)
+            );
+
+            gallery.innerHTML = "";
+
+            filteredProjects.forEach(project => {
+
+                const card = document.createElement("article");
+                card.className = "project-card";
+
+                const imageBox = document.createElement("div");
+                imageBox.className = "project-image";
+
+                const img = document.createElement("img");
+                img.src = project.image;
+                img.alt = project.title;
+                img.loading = "lazy";
+
+                img.addEventListener("click", () => {
+                    document.getElementById("large-image").src = project.image;
+                    document.getElementById("large-image").alt = project.title;
+                    document.getElementById("image-viewer").classList.add("active");
+                });
+
+                const info = document.createElement("div");
+                info.className = "project-info";
+
+                const title = document.createElement("h3");
+                title.textContent = project.title;
+
+                const description = document.createElement("p");
+                description.textContent = project.description;
+
+                imageBox.appendChild(img);
+                info.appendChild(title);
+                info.appendChild(description);
+
+                card.appendChild(imageBox);
+                card.appendChild(info);
+
+                gallery.appendChild(card);
+            });
+
+            emptyMessage.style.display =
+                filteredProjects.length === 0 ? "block" : "none";
+        }
+
+        search.addEventListener("input", showProjects);
+
+        // CLOSE LARGE IMAGE
+        function closeImage() {
+            document.getElementById("image-viewer").classList.remove("active");
+        }
+
+        document.getElementById("close-viewer")
+            .addEventListener("click", closeImage);
+
+        document.getElementById("image-viewer")
+            .addEventListener("click", function(event) {
+                if (event.target === this) closeImage();
+            });
+
+        document.addEventListener("keydown", function(event) {
+            if (event.key === "Escape") closeImage();
+        });
+
+        showProjects();
+    </script>
+
+</body>
+</html>
